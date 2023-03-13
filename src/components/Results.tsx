@@ -1,16 +1,12 @@
 import {useEffect, useState, useCallback} from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import Loader from "./Loader";
+import { fetchWrapper } from "../_helpers";
 const COMMON_URL = process.env.REACT_APP_BACKEND_URL;
-const API_KEY = process.env.REACT_APP_API_KEY
 
 type ResultsProps = {
     inputValue: string,
     setInputValue: (value: string) => void
-}
-
-type ShortenResponse = {
-    shortURL: string
 }
 
 const Results = ({inputValue, setInputValue}: ResultsProps) => {
@@ -24,23 +20,16 @@ const Results = ({inputValue, setInputValue}: ResultsProps) => {
             domain: "81vg.short.gy",
             originalURL: inputValue,
         }
-        try {
-            setLoading(true);
-            const res = await fetch(`${COMMON_URL}`, {
-                method: "post",
-                headers: {
-                    accept: "application/json",
-                    "Content-Type": "application/json",
-                    authorization: `${API_KEY}`,
-                },
-                body: JSON.stringify(data),
-            });
-            const response: ShortenResponse = await res.json();
-            setShortenLinks((links) => [...links, response.shortURL]);
-        } catch (err) {
-            setError(err);
-        } finally {
-            setLoading(false);
+        try{
+            setLoading(true)
+            const response = await fetchWrapper.post(COMMON_URL as string, data)
+            setShortenLinks((links) => [...links, response])
+        }
+        catch(err){
+            setError(err)
+        }
+        finally{
+            setLoading(false)
             setInputValue("")
         }
     }, [inputValue])
@@ -85,8 +74,6 @@ const Results = ({inputValue, setInputValue}: ResultsProps) => {
         ))}
     </>
   );
-
-
 }
 
 export default Results;
