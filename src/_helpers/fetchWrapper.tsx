@@ -1,4 +1,4 @@
-import { authHeader } from "./auth-header";
+import { authHeader } from "./authHeader";
 
 type bodyProps = {
     domain: string;
@@ -11,7 +11,7 @@ function post(url: string, body: bodyProps) {
     headers: authHeader(),
     body: JSON.stringify(body),
   };
-  return fetch(url, requestOptions).then((response) => response.json()).then((data)=> data.shortURL);
+  return fetch(url, requestOptions).then((response) => response.json());
 }
 
 export const fetchWrapper = {

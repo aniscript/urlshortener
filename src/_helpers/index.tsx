@@ -1,2 +1,2 @@
-export * from './auth-header'
+export * from './authHeader'
 export * from './fetchWrapper'

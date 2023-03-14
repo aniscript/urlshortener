@@ -23,7 +23,8 @@ const Results = ({inputValue, setInputValue}: ResultsProps) => {
         try{
             setLoading(true)
             const response = await fetchWrapper.post(COMMON_URL as string, data)
-            setShortenLinks((links) => [...links, response])
+            const result = await response.shortURL
+            setShortenLinks((links) => [...links, result])
         }
         catch(err){
             setError(err)

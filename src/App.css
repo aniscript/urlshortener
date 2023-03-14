@@ -200,6 +200,6 @@
   color: var(--secondary-color);
 }
 .noData {
-  color: var(--primary-color);
+  color: #fff;
   font-size: 1rem;
 }
